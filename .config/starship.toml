@@ -1,0 +1,20 @@
+add_newline=true
+
+[package]
+disabled=true
+
+[aws]
+disabled=true
+
+[conda]
+ignore_base = false
+symbol="conda->"
+format = "[$symbol$environment ](bold dimmed green)"
+
+
+[shell]
+style= "gray bold"
+disabled = false
+
+[git_status]
+disabled=true
