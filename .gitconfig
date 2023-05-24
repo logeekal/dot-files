@@ -1,0 +1,36 @@
+[core]
+	excludesfile = ~/.global_gitignore
+	pager = delta
+[user]
+	name = Jatin Kathuria
+  email = jtn.kathuria@gmail.com
+[includeIf "gitdir:~/projects/"]
+	path = ~/work.gitconfig
+[includeIf "gitdir:~/bmw/"]
+  path = ~/bmw.gitconfig
+[diff]
+	tool = vimdiff
+[mergetool "nvim"]
+  cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
+# set "nvim" as tool for merging
+[merge]
+  tool = nvim
+
+[interactive]
+	diffFilter = delta --color-only
+
+[delta]
+	features =  side-by-side line-numbers decorations
+	whitespace-error-style = 22 reverse
+
+[delta "decorations"]
+	commit-decoration-style = bold yellow box ul
+	file-style = bold yellow ul
+	file-decoration-style = none
+[http]
+	version = HTTP/1.1
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
