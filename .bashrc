@@ -1,0 +1,1 @@
+/Users/jatinkathuria/dotfiles/.bashrc
