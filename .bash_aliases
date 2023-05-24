@@ -1,4 +1,7 @@
 #!/bin/bash
+
+echo "sourcing aliases"
+
 # General bash commands
 alias ll="ls -la"
 
