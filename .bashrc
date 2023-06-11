@@ -1,3 +1,10 @@
+#exec 5> >(ts -i "%.s" >> /tmp/timestamps)
+
+## https://www.gnu.org/software/bash/manual/html_node/Bash-Variables.html
+#export BASH_XTRACEFD="5"
+
+## Enable tracing
+#set -x
  # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -131,29 +138,29 @@ fi
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin"
 
-# Anaconda Paths
-export PATH="$PATH:/mnt/c/ProgramData/Miniconda3/Scripts"
 
 # Powerline fonts 
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh  ]; then
   source /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
+## Anaconda Paths
+#export PATH="$PATH:/mnt/c/ProgramData/Miniconda3/Scripts"
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/logeekal/miniconda2/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/logeekal/miniconda2/etc/profile.d/conda.sh" ]; then
-        . "/home/logeekal/miniconda2/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/logeekal/miniconda2/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+## >>> conda initialize >>>
+## !! Contents within this block are managed by 'conda init' !!
+#__conda_setup="$('/home/logeekal/miniconda2/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+#if [ $? -eq 0 ]; then
+    #eval "$__conda_setup"
+#else
+    #if [ -f "/home/logeekal/miniconda2/etc/profile.d/conda.sh" ]; then
+        #. "/home/logeekal/miniconda2/etc/profile.d/conda.sh"
+    #else
+        #export PATH="/home/logeekal/miniconda2/bin:$PATH"
+    #fi
+#fi
+#unset __conda_setup
+## <<< conda initialize <<<
 alias  minishift="~/Downloads/minishift/minishift"
 alias yw="yarn workspace"
 [ -f ~/lineage_setup/env.sh ] && source ~/lineage_setup/env.sh
@@ -165,9 +172,12 @@ export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
 # Adding Gradle
 export PATH="$PATH:/opt/gradle/gradle-6.6/bin/"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"   This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"   This loads nvm bash_completion
+## commented in favour of asdf
+#echo "Load NVM"
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"   This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"   This loads nvm bash_completion
+# echo "Loaded NVM"
 
 
 # Generic bash environment variable definitions
@@ -175,15 +185,28 @@ if [ -f $HOME/.local-env.sh ]; then
     source $HOME/.local-env.sh
 fi
 
+########## asdf #############
+#if [ -s $HOME/.asdf/asdf.sh ]; then
+    
+    #. "$HOME/.asdf/asdf.sh"
+    #. "$HOME/.asdf/completions/asdf.bash"
+    
+#fi
+########## asdf #############
+
 export EDITOR=nvim
 export PATH="$HOME/bin:$PATH"
 export CATALINA_HOME=/opt/tomcat
 export PATH=/usr/local/share/apache-maven-3.8.2/bin:$PATH
 . "$HOME/.cargo/env"
 eval "$(starship init bash)"
-
+## only for MacOS
+ function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
+###
 
 
 for sourced in ~/scripts/*.sh; do
 	source $sourced
 done
+
+eval "$(/Users/jatinkathuria/.local/share/rtx/bin/rtx activate -s bash)"
