@@ -1,10 +1,3 @@
--- Setup lspconfig
---
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
--------------------------
------ Native LSP
--------------------------
 local opts = { noremap = true, silent = true }
 
 vim.keymap.set("n", "<leader>df", vim.diagnostic.goto_next, opts)
@@ -14,6 +7,16 @@ vim.keymap.set("n", "<leader>vd", "<cmd>lua vim.diagnostic.open_float()<CR>", op
 vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
 
 
-return {
-  capabilities = capabilities
-}
+
+-- Telescope
+--
+vim.keymap.set('n', '<leader>gs', '<cmd>Telescope grep_string<CR>', opts)
+vim.keymap.set("n", "<leader>gco", "<cmd>Telescope git_branches<CR>", opts)
+
+---------------------
+--- General Keymaps
+---------------------
+vim.keymap.set('n', '<leader>b', "<cmd>Buffers<CR>", opts)
+
+
+vim.keymap.set('n', '<leader>co', "<cmd>CSToggle<CR>", opts)

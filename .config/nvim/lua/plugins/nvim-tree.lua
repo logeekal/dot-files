@@ -19,7 +19,7 @@
 -- Please see https://github.com/nvim-tree/nvim-tree.lua/wiki/Migrating-To-on_attach for assistance in migrating.
 --
 
-local function on_attach(bufnr)
+local on_attach = function(bufnr)
   local api = require('nvim-tree.api')
 
   local function opts(desc)
@@ -95,131 +95,31 @@ local function on_attach(bufnr)
 end
 
 
-require("nvim-tree").setup({
-  sort_by = "case_sensitive",
-  --respect_buf_cwd = true,
-  on_attach = on_attach,
-  actions = {
-    open_file = {
-      window_picker = {
-        enable = false
+local setup = function()
+  require("nvim-tree").setup({
+    sort_by = "case_sensitive",
+    --respect_buf_cwd = true,
+    on_attach = on_attach,
+    actions = {
+      open_file = {
+        window_picker = {
+          enable = false
+        }
       }
-    }
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
+    },
+    renderer = {
+      group_empty = true,
+    },
+    filters = {
+      dotfiles = true,
+    },
+  })
+end
 
-
--- Legacy @deprecated config
---require("nvim-tree").setup({
---sort_by = "case_sensitive",
-----respect_buf_cwd = true,
---view = {
---adaptive_size = true,
---mappings = {
---list = {
---{ key = "u", action = "dir_up" },
---{ key = "<c-e>", action = "close" },
---{
---key = "s",
---action = "vsplit"
---},
---{
---key = "i",
---action = "split"
---}
---},
---},
---},
---actions = {
---open_file = {
---window_picker = {
---enable = false
---}
---}
---},
---renderer = {
---group_empty = true,
---},
---filters = {
---dotfiles = true,
---},
---})
---
--- Legacy @deprecated config
---require("nvim-tree").setup({
---sort_by = "case_sensitive",
-----respect_buf_cwd = true,
---view = {
---adaptive_size = true,
---mappings = {
---list = {
---{ key = "u", action = "dir_up" },
---{ key = "<c-e>", action = "close" },
---{
---key = "s",
---action = "vsplit"
---},
---{
---key = "i",
---action = "split"
---}
---},
---},
---},
---actions = {
---open_file = {
---window_picker = {
---enable = false
---}
---}
---},
---renderer = {
---group_empty = true,
---},
---filters = {
---dotfiles = true,
---},
---})
---
--- Legacy @deprecated config
---require("nvim-tree").setup({
---sort_by = "case_sensitive",
-----respect_buf_cwd = true,
---view = {
---adaptive_size = true,
---mappings = {
---list = {
---{ key = "u", action = "dir_up" },
---{ key = "<c-e>", action = "close" },
---{
---key = "s",
---action = "vsplit"
---},
---{
---key = "i",
---action = "split"
---}
---},
---},
---},
---actions = {
---open_file = {
---window_picker = {
---enable = false
---}
---}
---},
---renderer = {
---group_empty = true,
---},
---filters = {
---dotfiles = true,
---},
---})
---
+return {
+  'nvim-tree/nvim-web-devicons',
+  {
+    "nvim-tree/nvim-tree.lua",
+    config = setup
+  }
+}
