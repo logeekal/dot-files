@@ -1,17 +1,15 @@
 local opts = { noremap = true, silent = true }
 
-
-
 local setup = function()
-  require('telescope').setup {
+  require('telescope').setup({
     defaults = {
       dynamic_preview_title = true,
       layout_config = {
         vertical = {
           mirror = true,
-          prompt_position = 'top'
-        }
-      }
+          prompt_position = 'top',
+        },
+      },
     },
     pickers = {
       --find_files = {
@@ -20,31 +18,37 @@ local setup = function()
       --git_files = {
       --theme = "dropdown"
       --}
-    }
-  }
+    },
+  })
 
   require('telescope').load_extension('fzf')
+  require('telescope').load_extension('persisted')
   --require('telescope').load_extension('media_files')
 end
 
 local init = function()
-local dropDownTheme = require('telescope.themes').get_dropdown({
-  layout_config = {
-    width = 0.9,
-    preview_cutoff = 1,
-    height = 0.5,
-    mirror = true,
-    anchor = 'N',
-    prompt_position = 'top'
-  }
-})
+  local dropDownTheme = require('telescope.themes').get_dropdown({
+    layout_config = {
+      width = 0.9,
+      preview_cutoff = 1,
+      height = 0.5,
+      mirror = true,
+      anchor = 'N',
+      prompt_position = 'top',
+    },
+  })
   local telescope = require('telescope.builtin')
-  vim.keymap.set('n', "<leader>rg", function() telescope.live_grep(dropDownTheme) end, opts)
-  vim.keymap.set('n', "<leader>pa", function() telescope.find_files(dropDownTheme) end, opts)
-  vim.keymap.set('n', "<leader>p", function() telescope.git_files(dropDownTheme) end, opts)
+  vim.keymap.set('n', '<leader>rg', function()
+    telescope.live_grep(dropDownTheme)
+  end, opts)
+  vim.keymap.set('n', '<leader>pa', function()
+    telescope.find_files(dropDownTheme)
+  end, opts)
+  vim.keymap.set('n', '<leader>p', function()
+    telescope.git_files(dropDownTheme)
+  end, opts)
   --vim.keymap.set('n', "<leader>gr", function() telescope.lsp_references(dropDownTheme) end, opts)
 end
-
 
 return {
   'nvim-lua/plenary.nvim',
@@ -58,9 +62,11 @@ return {
       'nvim-lua/plenary.nvim',
       'telescope-fzf-native.nvim',
       'nvim-telescope/telescope-ui-select.nvim',
+      'olimorris/persisted.nvim',
     },
     config = setup,
-    init = init
+    init = init,
+    cmd = 'Telescope',
   },
   {
     'nvim-telescope/telescope-fzf-native.nvim',

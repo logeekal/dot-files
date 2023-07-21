@@ -2,10 +2,26 @@ local setup = function()
   ----------------------------
   --    Treesitter
   ----------------------------
-  require 'nvim-treesitter.configs'.setup {
+  require('nvim-treesitter.configs').setup({
     -- A list of parser names, or "all"
-    ensure_installed = { "rust", "javascript", "typescript", "lua", "python", "bash", "html", "css", "graphql", "go",
-      "json", "yaml", "svelte", "scss", "vim", "svelte" },
+    ensure_installed = {
+      'rust',
+      'javascript',
+      'typescript',
+      'lua',
+      'python',
+      'bash',
+      'html',
+      'css',
+      'graphql',
+      'go',
+      'json',
+      'yaml',
+      'svelte',
+      'scss',
+      'vim',
+      'svelte',
+    },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -23,7 +39,17 @@ local setup = function()
       -- list of language that will be disabled
 
       --disable = { "c", "rust" },
-
+      -- disable = function(lang, buf)
+      --   local max_filesize = 1000 * 1024 -- 100 KB
+      --   local ok, stats =
+      --     pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      --   if ok and stats and stats.size > max_filesize then
+      --     print('Disabling Treesitter', ok, stats.size, max_filesize)
+      --     vim.g.loaded_matchparen = 0
+      --     return true
+      --   end
+      --   print('Enabling Treesitter', ok, stats)
+      -- end,
       -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
       -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
       -- Using this option may slow down your editor, and you may see some duplicate highlights.
@@ -31,25 +57,46 @@ local setup = function()
       additional_vim_regex_highlighting = false,
     },
     indent = {
-      enable = true
+      enable = true,
     },
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = "gnn",
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
+        init_selection = 'gnn',
+        node_incremental = 'grn',
+        scope_incremental = 'grc',
+        node_decremental = 'grm',
       },
     },
-  }
+  })
+end
+
+local setup_context = function()
+  require('treesitter-context').setup({
+    enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
+    max_lines = 0, -- How many lines the window should span. Values <= 0 mean no limit.
+    min_window_height = 0, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
+    line_numbers = true,
+    multiline_threshold = 20, -- Maximum number of lines to collapse for a single context line
+    trim_scope = 'outer', -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
+    mode = 'cursor', -- Line used to calculate context. Choices: 'cursor', 'topline'
+    -- Separator between context and content. Should be a single character string, like '-'.
+    -- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
+    separator = nil,
+    zindex = 20, -- The Z-index of the context window
+    on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
+  })
 end
 
 return {
   {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    event = { 'BufReadPost', 'BufNewFile' },
     config = setup,
-  }
+  },
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    config = setup_context,
+  },
 }

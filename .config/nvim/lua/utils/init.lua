@@ -50,4 +50,15 @@ M.mason_install = function(package_list)
   end
 end
 
+M.disableSyntaxLargeFile = function()
+  vim.cmd('TSBufDisable highlight')
+  -- Switching syntax off is only needed in very big file ( > 100M )
+  -- vim.cmd('syntax off')
+  -- vim.cmd('syntax clear')
+  vim.cmd('TSContextDisable')
+  -- vim.cmd('IlluminatePauseBuf')
+  -- vim.cmd('IndentBlanklineDisable')
+  vim.cmd('NoMatchParen')
+end
+
 return M

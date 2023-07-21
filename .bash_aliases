@@ -1,7 +1,9 @@
 #!/bin/bash
 
 # General bash commands
-alias ll="ls -la"
+alias ls="exa -s changed"
+alias ll="exa -s changed -l"
+alias lsm="exa -s name"
 
 # yarn aliases
 alias yw="yarn workspace"
@@ -11,7 +13,7 @@ alias yw="yarn workspace"
 ### gco -> git checkout with a lookup list of branches sorted by updated by latest commit dates.
 alias gco="git checkout \"\$(git for-each-ref --sort=committerdate refs/heads/ --format='%(color: red)%(committerdate:short) %(color: cyan)%(refname:short)' | awk '{print \$2}'| fzf +s --tac)\""
 alias gcb="git checkout -b"
-alias ga="git add "
+alias ga="git add -u"
 alias grc="git rm --cached \"\$(git diff --cached --name-only | fzf -m --bind ctrl-a:select-all,ctrl-d:deselect-all,ctrl-t:toggle-all)\""
 alias gcm="git commit -m"
 alias gcmv="git commit --no-verify -m "
@@ -30,6 +32,7 @@ alias tma="tmux attach -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | f
 alias tmd="tmux detach";
 
 #neovim alias
+#alias vi=/usr/bin/vi
 alias vi=nvim
 alias vim=nvim
 

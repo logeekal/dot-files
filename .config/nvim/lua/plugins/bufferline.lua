@@ -6,20 +6,20 @@ local options = {
     modified_icon = '✥',
     show_close_icon = false,
     always_show_bufferline = true,
-    diagnostics = "nvim_lsp",
+    diagnostics = 'nvim_lsp',
     diagnostics_indicator = function(_, _, diag)
       local icons = utils.icons.diagnostics
-      local ret = (diag.error and icons.Error .. diag.error .. " " or "")
-          .. (diag.warning and icons.Warn .. diag.warning or "")
+      local ret = (diag.error and icons.Error .. diag.error .. ' ' or '')
+        .. (diag.warning and icons.Warn .. diag.warning or '')
       return vim.trim(ret)
     end,
     offsets = {
       {
-        filetype = "NvimTree",
-        text = "File Explorer",
-        highlight = "Directory",
-        separator = false -- use a "true" to enable the default, or set your own character
-      }
+        filetype = 'NvimTree',
+        text = 'File Explorer',
+        highlight = 'Directory',
+        separator = false, -- use a "true" to enable the default, or set your own character
+      },
     },
     name_formatter = function(buff)
       local user_home_dir = vim.loop.os_homedir()
@@ -87,13 +87,13 @@ local options = {
       bold = false,
     },
   },
-
 }
 return {
   {
     'akinsho/bufferline.nvim',
     config = function()
       require('bufferline').setup(options)
-    end
-  }
+    end,
+    enabled = false,
+  },
 }

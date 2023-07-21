@@ -6,7 +6,6 @@ return {
       'nvim-tree/nvim-web-devicons',
     },
     config = function()
-      print('Loading lualine')
       require('lualine').setup({
         options = {
           globalstatus = true,

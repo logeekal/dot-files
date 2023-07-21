@@ -36,6 +36,7 @@ return {
   {
     'jose-elias-alvarez/null-ls.nvim',
     config = setup,
+    event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'williamboman/mason-lspconfig.nvim',
     },

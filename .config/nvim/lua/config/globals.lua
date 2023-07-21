@@ -10,7 +10,7 @@ opt.cursorline = true -- Enable highlighting of the current line
 opt.expandtab = true -- Use spaces instead of tabs
 opt.foldexpr = 'nvim_treesitter#foldexpr()'
 opt.foldlevel = 99 -- By default unfolded code
-opt.foldmethod = 'expr'
+opt.foldmethod = 'indent'
 opt.formatoptions = 'jcroqlnt' -- tcqj
 opt.grepformat = '%f:%l:%c:%m'
 opt.grepprg = 'rg --vimgrep'
@@ -45,10 +45,17 @@ opt.updatetime = 200 -- Save swap file and trigger CursorHold
 opt.wildmode = 'longest:full,full' -- Command-line completion mode
 opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
+opt.swapfile = false -- Disable Swap file
 
 require('tokyonight').load()
 -- require('onedark').load()
 --
+require('nightfox.config').set_fox('dayfox')
+require('nightfox.config').set_fox('nightfox')
+require('nightfox.config').set_fox('terafox')
+require('nightfox.config').set_fox('carbonfox')
+-- require('carboxfox').load()
+-- require('nightfox').load()
 
 local win = require('lspconfig.ui.windows')
 local _default_opts = win.default_opts

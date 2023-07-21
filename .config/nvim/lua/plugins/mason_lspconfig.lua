@@ -51,10 +51,10 @@ local setup = function()
       bufOpts
     )
 
-    vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-      buffer = bufnr,
-      callback = format,
-    })
+    -- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+    --   buffer = bufnr,
+    --   callback = format,
+    -- })
   end
 
   local lsp_flags = {
@@ -112,6 +112,7 @@ end
 return {
   {
     'williamboman/mason-lspconfig.nvim',
+    cmd = { 'LspInstall', 'LspUninstall' },
     dependencies = {
       'williamboman/mason.nvim',
       'neovim/nvim-lspconfig',

@@ -5,14 +5,14 @@
 
 ## Enable tracing
 #set -x
- # ~/.bashrc: executed by bash(1) for non-login shells.
+# ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
-      *) return;;
+    *) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -44,7 +44,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes ;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -54,25 +54,25 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        # We have color support; assume it's compliant with Ecma-48
+        # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+        # a case would tend to support setf rather than setaf.)
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
 
 parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 if [ "$color_prompt" = yes ]; then
     #PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-   
 
-     #\033[ - Indicates the beginning of color in the text
+
+    #\033[ - Indicates the beginning of color in the text
     #x;yzm - Indicates color code
     #\033[00m - Indicates the end of color in the text
     PS1="\[\033[01;32m\][\\s]\[\033[00m\]\\w:\[\033[01;33m\]\$(parse_git_branch)\[\033[00m\] $ "
@@ -83,11 +83,11 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
+    xterm*|rxvt*)
+        PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+        ;;
+    *)
+        ;;
 esac
 
 # enable color support of ls and also add handy aliases
@@ -127,21 +127,21 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
 fi
 
-# Docker for Windows configuration 
+# Docker for Windows configuration
 export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 export PATH="$PATH:/mnt/c/Program\ Files/Docker/Docker/resources/bin"
 
 
-# Powerline fonts 
+# Powerline fonts
 if [ -f /usr/share/powerline/bindings/bash/powerline.sh  ]; then
-  source /usr/share/powerline/bindings/bash/powerline.sh
+    source /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
 ## Anaconda Paths
@@ -151,13 +151,13 @@ fi
 ## !! Contents within this block are managed by 'conda init' !!
 #__conda_setup="$('/home/logeekal/miniconda2/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 #if [ $? -eq 0 ]; then
-    #eval "$__conda_setup"
+#eval "$__conda_setup"
 #else
-    #if [ -f "/home/logeekal/miniconda2/etc/profile.d/conda.sh" ]; then
-        #. "/home/logeekal/miniconda2/etc/profile.d/conda.sh"
-    #else
-        #export PATH="/home/logeekal/miniconda2/bin:$PATH"
-    #fi
+#if [ -f "/home/logeekal/miniconda2/etc/profile.d/conda.sh" ]; then
+#. "/home/logeekal/miniconda2/etc/profile.d/conda.sh"
+#else
+#export PATH="/home/logeekal/miniconda2/bin:$PATH"
+#fi
 #fi
 #unset __conda_setup
 ## <<< conda initialize <<<
@@ -187,10 +187,10 @@ fi
 
 ########## asdf #############
 #if [ -s $HOME/.asdf/asdf.sh ]; then
-    
-    #. "$HOME/.asdf/asdf.sh"
-    #. "$HOME/.asdf/completions/asdf.bash"
-    
+
+#. "$HOME/.asdf/asdf.sh"
+#. "$HOME/.asdf/completions/asdf.bash"
+
 #fi
 ########## asdf #############
 
@@ -199,14 +199,15 @@ export PATH="$HOME/bin:$PATH"
 export CATALINA_HOME=/opt/tomcat
 export PATH=/usr/local/share/apache-maven-3.8.2/bin:$PATH
 . "$HOME/.cargo/env"
+export RIPGREP_CONFIG_PATH=~/.ripgreprc
 eval "$(starship init bash)"
 ## only for MacOS
- function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
+function sha256sum() { shasum -a 256 "$@" ; } && export -f sha256sum
 ###
 
 
 for sourced in ~/scripts/*.sh; do
-	source $sourced
+    source $sourced
 done
 
 eval "$(/Users/jatinkathuria/.local/share/rtx/bin/rtx activate -s bash)"
