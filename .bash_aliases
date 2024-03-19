@@ -65,5 +65,10 @@ video2gif() {
 
 
 video2mp4(){
-    ffmpeg -i "${i}"  -q:v 0 "${1}.mp4"
+    INPUT_FULL_FILE_PATH="${1}"
+    INPUT_FILE=$(basename "${INPUT_FULL_FILE_PATH}")
+    INPUT_PATH=$(dirname "${INPUT_FULL_FILE_PATH}")
+    OUT_FULL_FILE_PATH="${INPUT_PATH}/${INPUT_FILE%.*}.mp4"
+    printf "Converting ${INPUT_FILE} to ${OUT_FULL_FILE_PATH}"
+    ffmpeg -i "${INPUT_FULL_FILE_PATH}" -q:v 0 "${INPUT_PATH}/${INPUT_FILE%.*}.mp4" && rm "${INPUT_FULL_FILE_PATH}"
 }
