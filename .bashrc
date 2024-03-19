@@ -167,7 +167,9 @@ alias yw="yarn workspace"
 #fish
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+# export JAVA_HOME="/usr/lib/jvm/java-11-openjdk-amd64/"
+
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17"
 
 # Adding Gradle
 export PATH="$PATH:/opt/gradle/gradle-6.6/bin/"

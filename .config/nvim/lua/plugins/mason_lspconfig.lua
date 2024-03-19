@@ -1,6 +1,6 @@
 local lsp_servers_ensure_installed = {
   'luau_lsp',
-  'tsserver',
+  -- 'tsserver',
   'eslint',
   'yamlls',
   'lua_ls',

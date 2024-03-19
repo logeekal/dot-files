@@ -25,6 +25,8 @@ alias gpu="git push -u origin \"\$(git branch --show-current)\""
 alias gmerges="git ls-files -u  | awk '{print \$4}' | sort | uniq"
 ## checkout previous branch
 alias gcop="git checkout -"
+## View PR
+alias prweb="gh pr view --web"
 
 # tmux alias
 ### tmux attach session and select the session with a lookup list with FZF
@@ -59,4 +61,9 @@ video2gif() {
     ffmpeg -y -i "${1}" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen "${1}.png"
     ffmpeg -i "${1}" -i "${1}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${1}".gif
     rm "${1}.png"
+}
+
+
+video2mp4(){
+    ffmpeg -i "${i}"  -q:v 0 "${1}.mp4"
 }

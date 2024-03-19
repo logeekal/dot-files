@@ -2,7 +2,7 @@ local function copilotSetup()
   -- with default options
   require('copilot').setup({
     panel = {
-      enabled = false,
+      enabled = true,
       auto_refresh = true,
       keymap = {
         jump_prev = '[[',
@@ -17,7 +17,7 @@ local function copilotSetup()
       },
     },
     suggestion = {
-      enabled = false,
+      enabled = true,
       auto_trigger = true,
       debounce = 75,
       keymap = {
@@ -31,8 +31,12 @@ local function copilotSetup()
     },
     filetypes = {
       lua = true,
+      javascript = true,
+      typescript = true,
+      javascriptreact = true,
+      typescriptreact = true,
       yaml = false,
-      markdown = false,
+      markdown = true,
       help = false,
       gitcommit = false,
       gitrebase = false,
@@ -47,16 +51,16 @@ local function copilotSetup()
 end
 
 return {
-  -- {
-  --   'zbirenbaum/copilot.lua',
-  --   cmd = 'Copilot',
-  --   event = 'InsertEnter',
-  --   config = copilotSetup,
-  -- },
-  -- {
-  --   'zbirenbaum/copilot-cmp',
-  --   config = function()
-  --     require('copilot_cmp').setup()
-  --   end,
-  -- },
+  {
+    'zbirenbaum/copilot.lua',
+    cmd = 'Copilot',
+    event = 'InsertEnter',
+    config = copilotSetup,
+  },
+  {
+    'zbirenbaum/copilot-cmp',
+    config = function()
+      require('copilot_cmp').setup()
+    end,
+  },
 }
