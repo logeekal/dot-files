@@ -47,6 +47,19 @@ local init = function()
   vim.keymap.set('n', '<leader>p', function()
     telescope.git_files(dropDownTheme)
   end, opts)
+
+  vim.keymap.set('n', '<leader>gss', function()
+    -- search for text under cursor with custom theme
+    telescope.grep_string(dropDownTheme)
+  end, opts)
+
+  vim.keymap.set('n', '<leader>gs', function()
+    telescope.grep_string(vim.tbl_extend('force', dropDownTheme, {
+      search = vim.fn.input('Grep > '),
+      theme = 'dropdown',
+    }))
+  end, opts)
+
   --vim.keymap.set('n', "<leader>gr", function() telescope.lsp_references(dropDownTheme) end, opts)
 end
 

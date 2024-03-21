@@ -16,12 +16,6 @@ vim.keymap.set(
 )
 vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
 
--- Telescope
---
-vim.keymap.set('n', '<leader>gs', function()
-  require('telescope.builtin').grep_string({ search = vim.fn.input('Grep > ') })
-end, opts)
-vim.keymap.set('n', '<leader>gss', '<cmd>Telescope grep_string<CR>', opts)
 vim.keymap.set('n', '<leader>gco', '<cmd>Telescope git_branches<CR>', opts)
 
 ---------------------
