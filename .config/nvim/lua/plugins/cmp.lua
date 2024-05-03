@@ -72,7 +72,7 @@ local function cmp_dictionary_setup()
     exact_length = 2,
     first_case_insensitive = true,
     document = {
-      enable = true,
+      enable = false,
       command = { 'wn', '${label}', '-over' },
     },
   })

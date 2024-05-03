@@ -37,7 +37,7 @@ alias tmd="tmux detach";
 #alias vi=/usr/bin/vi
 alias vi=nvim
 alias vim=nvim
-
+alias v=nvim
 #diskusage
 alias du="du -h --max-depth=1"
 

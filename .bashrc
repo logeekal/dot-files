@@ -212,4 +212,4 @@ for sourced in ~/scripts/*.sh; do
     source $sourced
 done
 
-eval "$(/Users/jatinkathuria/.local/share/rtx/bin/rtx activate -s bash)"
+eval "$(/Users/jatinkathuria/.local/bin/mise activate bash)"

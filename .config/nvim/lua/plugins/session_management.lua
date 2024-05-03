@@ -1,16 +1,17 @@
 local setup_persisted = function()
   require('persisted').setup({
-    silent = false,        -- silent nvim message when sourcing session file
+    silent = false, -- silent nvim message when sourcing session file
     use_git_branch = true, -- create session files based on the branch of the git enabled repository
-    autosave = true,       -- automatically save session files when exiting Neovim
+    autosave = true, -- automatically save session files when exiting Neovim
+    default_branch = 'main', -- default branch to use when use_git_branch is true
     should_autosave = nil, -- function to determine if a session should be autosaved
-    autoload = true,       -- automatically load the session for the cwd on Neovim startup
+    autoload = true, -- automatically load the session for the cwd on Neovim startup
     -- on_autoload_no_session = nil,         -- function to run when `autoload = true` but there is no session to load
 
     on_autoload_no_session = function()
       vim.notify('No existing session to load.')
     end,
-    telescope = {                         -- options for the telescope extension
+    telescope = { -- options for the telescope extension
       reset_prompt_after_deletion = true, -- whether to reset prompt after session deleted
     },
   })

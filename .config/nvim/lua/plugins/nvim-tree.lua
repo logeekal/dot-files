@@ -195,6 +195,9 @@ local setup = function()
         },
       },
     },
+    view = {
+      side = 'right',
+    },
     renderer = {
       group_empty = true,
     },
