@@ -73,13 +73,4 @@ video2mp4(){
     ffmpeg -i "${INPUT_FULL_FILE_PATH}" -q:v 0 "${INPUT_PATH}/${INPUT_FILE%.*}.mp4" && rm "${INPUT_FULL_FILE_PATH}"
 }
 
-# get PR Status
-# Usage: getPR <PR number>
-getPR(){
-    PR_NUMBER="${1}"
-    echo "Fetching PR status $PR_NUMBER"
-    curl https://memo.landkreis-muenchen.de/eat/eAT_WebInfo_Vorlage_PKZ_OUT.html | rg  "\"$PR_NUMBER\": \"([ A-Za-zŽžÀ-ÿäöüßÄÖÜẞ0-9:\(\)\.]*)" --json | jq '.data.submatches | select (. != null) | .[].match.text'
-}
-
-alias PR="getPR 375427"
 alias fast="docker run --rm --net=host waja/speedtest"
