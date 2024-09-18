@@ -1,6 +1,7 @@
 [core]
 	excludesfile = ~/.global_gitignore
 	pager = delta
+	symlinks = false
 [user]
 	name = Jatin Kathuria
   email = jtn.kathuria@gmail.com

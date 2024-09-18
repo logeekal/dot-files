@@ -13,6 +13,7 @@ local lsp_servers_ensure_installed = {
   'jsonls',
   'svelte',
   'tailwindcss',
+  'pylsp',
 }
 
 local setup = function()
@@ -98,6 +99,13 @@ local setup = function()
             },
           },
         },
+        on_attach = on_attach,
+      })
+    end,
+
+    ['pyright'] = function()
+      require('lspconfig').svelte.setup({
+        filetypes = { 'conaryrecipe', 'py' },
         on_attach = on_attach,
       })
     end,

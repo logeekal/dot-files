@@ -24,3 +24,18 @@ vim.keymap.set('n', '<leader>gco', '<cmd>Telescope git_branches<CR>', opts)
 vim.keymap.set('n', '<leader>b', '<cmd>Buffers<CR>', opts)
 
 vim.keymap.set('n', '<leader>co', '<cmd>CSToggle<CR>', opts)
+
+-------------------
+--  quick fix -----
+-------------------
+
+local function quickfix()
+  vim.lsp.buf.code_action({
+    filter = function(a)
+      return a.isPreferred
+    end,
+    apply = true,
+  })
+end
+
+vim.keymap.set('n', '<leader>qf', quickfix, opts)

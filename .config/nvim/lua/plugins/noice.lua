@@ -1,5 +1,20 @@
 local setup = function()
   require('noice').setup({
+    views = {
+      cmdline_popup = {
+        position = {
+          row = 5,
+        },
+        border = {
+          style = 'single',
+          padding = { 2, 3 },
+        },
+        filter_options = {},
+        win_options = {
+          winhighlight = 'NormalFloat:NormalFloat,FloatBorder:FloatBorder',
+        },
+      },
+    },
     lsp = {
       -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
       override = {
