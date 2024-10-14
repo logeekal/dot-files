@@ -144,23 +144,6 @@ if [ -f /usr/share/powerline/bindings/bash/powerline.sh  ]; then
     source /usr/share/powerline/bindings/bash/powerline.sh
 fi
 
-## Anaconda Paths
-#export PATH="$PATH:/mnt/c/ProgramData/Miniconda3/Scripts"
-
-## >>> conda initialize >>>
-## !! Contents within this block are managed by 'conda init' !!
-#__conda_setup="$('/home/logeekal/miniconda2/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-#if [ $? -eq 0 ]; then
-#eval "$__conda_setup"
-#else
-#if [ -f "/home/logeekal/miniconda2/etc/profile.d/conda.sh" ]; then
-#. "/home/logeekal/miniconda2/etc/profile.d/conda.sh"
-#else
-#export PATH="/home/logeekal/miniconda2/bin:$PATH"
-#fi
-#fi
-#unset __conda_setup
-## <<< conda initialize <<<
 alias  minishift="~/Downloads/minishift/minishift"
 alias yw="yarn workspace"
 [ -f ~/lineage_setup/env.sh ] && source ~/lineage_setup/env.sh
@@ -212,4 +195,5 @@ for sourced in ~/scripts/*.sh; do
     source $sourced
 done
 
+set -o vi
 eval "$(/Users/jatinkathuria/.local/bin/mise activate bash)"

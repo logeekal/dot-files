@@ -6,11 +6,13 @@ disabled=true
 [aws]
 disabled=true
 
-[conda]
-ignore_base = false
-symbol="conda->"
-format = "[$symbol$environment ](bold dimmed green)"
+# [conda]
+# ignore_base = false
+# symbol="conda->"
+# format = "[$symbol$environment ](bold dimmed green)"
 
+[python]
+symbol = '👾 '
 
 [shell]
 style= "gray bold"

@@ -74,3 +74,4 @@ video2mp4(){
 }
 
 alias fast="docker run --rm --net=host waja/speedtest"
+alias temp="nvim /tmp/tmp.${1}"

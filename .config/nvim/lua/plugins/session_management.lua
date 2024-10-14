@@ -1,18 +1,66 @@
-local setup_persisted = function()
-  require('persisted').setup({
-    silent = false, -- silent nvim message when sourcing session file
-    use_git_branch = true, -- create session files based on the branch of the git enabled repository
-    autosave = true, -- automatically save session files when exiting Neovim
-    default_branch = 'main', -- default branch to use when use_git_branch is true
-    should_autosave = nil, -- function to determine if a session should be autosaved
-    autoload = true, -- automatically load the session for the cwd on Neovim startup
-    -- on_autoload_no_session = nil,         -- function to run when `autoload = true` but there is no session to load
+local load_alpha_dashboard = function()
+  local ok = pcall(require, 'alpha')
+  if ok then
+    vim.cmd([[Alpha]])
+  end
+end
 
-    on_autoload_no_session = function()
-      vim.notify('No existing session to load.')
+local setup_persisted = function()
+  local persisted = require('persisted')
+  persisted.setup({
+    autostart = true, -- Automatically start the plugin on load?
+
+    -- Function to determine if a session should be saved
+    ---@type fun(): boolean
+    should_save = function()
+      return true
+      -- print('Checking if session should be saved')
+      -- if vim.g.started_with_stdin then
+      --   print('Session not saved because started with stdin')
+      --   return false
+      -- end
+      --
+      -- local arg_first_real = vim.uv.fs_realpath(vim.fn.argv()[0])
+      -- vim.print('Argv (real): ', arg_first_real, '----------------------')
+      --
+      -- if vim.fn.argc() == 0 then
+      --   print('Session saved because arguments were passed')
+      --   print('Arguments:', vim.fn.argv())
+      --   return true
+      -- else
+      --   print('Session not saved because no arguments were passed')
+      --   return false
+      -- end
     end,
-    telescope = { -- options for the telescope extension
-      reset_prompt_after_deletion = true, -- whether to reset prompt after session deleted
+
+    save_dir = vim.fn.expand(vim.fn.stdpath('data') .. '/sessions/'), -- Directory where session files are saved
+
+    follow_cwd = true, -- Change the session file to match any change in the cwd?
+    use_git_branch = true, -- Include the git branch in the session file name?
+    autoload = true, -- Automatically load the session for the cwd on Neovim startup?
+
+    -- Function to run when `autoload = true` but there is no session to load
+    ---@type fun(): any
+    on_autoload_no_session = function()
+      load_alpha_dashboard()
+    end,
+
+    allowed_dirs = {}, -- Table of dirs that the plugin will start and autoload from
+    ignored_dirs = {}, -- Table of dirs that are ignored for starting and autoloading
+
+    telescope = {
+      mappings = {
+        -- Mappings for managing sessions in Telescope
+        copy_session = '<C-c>',
+        change_branch = '<C-b>',
+        delete_session = '<C-d>',
+      },
+      icons = {
+        -- icons displayed in the Telescope picker
+        selected = ' ',
+        dir = '  ',
+        branch = ' ',
+      },
     },
   })
 end
