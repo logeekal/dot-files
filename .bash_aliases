@@ -1,12 +1,14 @@
 #!/bin/bash
 
 # General bash commands
-alias ls="exa -s changed"
-alias ll="exa -s changed -l"
-alias lsm="exa -s name"
+alias ls="lsd"
+alias ll="lsd -l"
+alias lsm="lsd -l --sort name"
 
-# yarn aliases
+# yarn/npm aliases
 alias yw="yarn workspace"
+alias yarne="yarn \$(cat package.json | jq -r '.scripts | keys[]' | fzf)"
+
 
 # git alias
 ## gco shows branches based on last commit that was done.
@@ -21,6 +23,11 @@ alias gst="git status"
 alias glog="git log --oneline --graph --first-parent"
 alias gbd="git branch -D \"\$(git branch -v | sed \"s/\*/ /\" | awk '{print \$1}' | fzf)\""
 alias gpu="git push -u origin \"\$(git branch --show-current)\""
+
+function ggo() {
+    gh browse $1
+}
+
 ## merge conflicts
 alias gmerges="git ls-files -u  | awk '{print \$4}' | sort | uniq"
 ## checkout previous branch
@@ -32,6 +39,10 @@ alias prweb="gh pr view --web"
 ### tmux attach session and select the session with a lookup list with FZF
 alias tma="tmux attach -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | fzf)\" " ;
 alias tmd="tmux detach";
+alias tmkill="tmux kill-session"
+
+### tmux switch session and select the session with a lookup list with FZF
+alias tms="tmux switch -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | fzf)\" " ;
 
 #neovim alias
 #alias vi=/usr/bin/vi
@@ -39,7 +50,7 @@ alias vi=nvim
 alias vim=nvim
 alias v=nvim
 #diskusage
-alias du="du -h --max-depth=1"
+alias du="du -h -d=1"
 
 alias mkdir="mkdir -p"
 

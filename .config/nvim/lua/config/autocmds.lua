@@ -14,14 +14,16 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = { '*' },
   callback = function(event)
     if
-      vim.bo.filetype == 'typescript'
-      or vim.bo.filetype == 'javascript'
-      or vim.bo.filetype == 'javascriptreact'
-      or vim.bo.filetype == 'typescriptreact'
+        vim.bo.filetype == 'typescript'
+        or vim.bo.filetype == 'javascript'
+        or vim.bo.filetype == 'javascriptreact'
+        or vim.bo.filetype == 'typescriptreact'
     then
-      vim.cmd('EslintFixAll')
+      vim.lsp.buf.format({
+        async = false,
+      })
       local client =
-        vim.lsp.get_active_clients({ bufnr = event.buf, name = 'eslint' })[1]
+          vim.lsp.get_clients({ bufnr = event.buf, name = 'eslint' })[1]
       if client then
         local diag = vim.diagnostic.get(
           event.buf,
@@ -29,7 +31,9 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         )
         local diag_result = #diag
         if diag_result ~= 0 then
-          vim.cmd('EslintFixAll')
+          vim.lsp.buf.format({
+            async = false,
+          })
           return
         else
           print('Not running EslintFixAll')
@@ -66,10 +70,10 @@ end
 
 local setFoldMethodForReact = function()
   if
-    vim.bo.filetype == 'typescript'
-    or vim.bo.filetype == 'javascript'
-    or vim.bo.filetype == 'javascriptreact'
-    or vim.bo.filetype == 'typescriptreact'
+      vim.bo.filetype == 'typescript'
+      or vim.bo.filetype == 'javascript'
+      or vim.bo.filetype == 'javascriptreact'
+      or vim.bo.filetype == 'typescriptreact'
   then
     vim.opt.foldmethod = 'indent'
   end

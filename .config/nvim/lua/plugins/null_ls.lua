@@ -3,7 +3,6 @@ local utils = require('utils')
 local install_null_ls_formatters = function()
   local formatters_to_install = {
     'stylua',
-    'beautysh',
     'codespell',
     'vint',
   }
@@ -19,7 +18,6 @@ local setup = function()
   null_ls.setup({
     sources = {
       formatting.stylua,
-      formatting.beautysh,
       diag.codespell,
       diag.vint,
     },
@@ -34,11 +32,12 @@ end
 return {
 
   {
-    'jose-elias-alvarez/null-ls.nvim',
+    'nvimtools/none-ls.nvim',
     config = setup,
     event = { 'BufReadPre', 'BufNewFile' },
     dependencies = {
       'williamboman/mason-lspconfig.nvim',
     },
+    enabled = false,
   },
 }

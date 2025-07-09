@@ -3,10 +3,10 @@ return {
   {
     'karb94/neoscroll.nvim',
     config = function()
-      -- neoscroll highjacking <C-E> from Nvim Tree
       require('neoscroll').setup()
     end,
     custom_keys = {
+      -- neoscroll highjacking <C-E> from Nvim Tree
       ['<C-E>'] = false,
     },
     event = { 'BufReadPost' },

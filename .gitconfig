@@ -25,9 +25,9 @@
 	whitespace-error-style = 22 reverse
 
 [delta "decorations"]
+  commit-style = yellow bold
 	commit-decoration-style = bold yellow box ul
 	file-style = bold yellow ul
-	file-decoration-style = none
 [http]
 	version = HTTP/1.1
 [filter "lfs"]

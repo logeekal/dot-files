@@ -25,10 +25,12 @@ local setup = function()
       },
       -- this value is passed to: https://nodejs.org/api/cli.html#--max-old-space-sizesize-in-megabytes
       -- memory limit in megabytes or "auto"(basically no limit)
-      tsserver_max_memory = 'auto',
+      tsserver_max_memory = 8192,
       -- described below
       tsserver_format_options = {},
-      tsserver_file_preferences = {},
+      tsserver_file_preferences = {
+        includeCompletionsForModuleExports = true,
+      },
       -- locale of all tsserver messages, supported locales you can find here:
       -- https://github.com/microsoft/TypeScript/blob/3c221fc086be52b19801f6e8d82596d04607ede6/src/compiler/utilitiesPublic.ts#L620
       tsserver_locale = 'en',
@@ -61,6 +63,7 @@ return {
     build = 'npm i -g @styled/typescript-styled-plugin typescript-styled-plugin',
     opts = {},
     config = setup,
+    enabled = false,
   },
 
   {
@@ -68,7 +71,7 @@ return {
     dependencies = { 'MunifTanjim/nui.nvim' },
     config = {
       keymaps = {
-        toggle = '<leader>xd', -- default '<leader>dd'
+        toggle = '<leader>xd',           -- default '<leader>dd'
         go_to_definition = '<leader>dx', -- default '<leader>dx'
       },
     },

@@ -26,6 +26,7 @@ local lazyopts = {
 
 require('lazy').setup('plugins', lazyopts)
 
+require('lsp')
 require('config.cmds')
 require('config.globals')
 require('config.keymaps')

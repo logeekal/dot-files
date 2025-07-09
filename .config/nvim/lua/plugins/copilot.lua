@@ -35,7 +35,7 @@ local function copilotSetup()
       typescript = true,
       javascriptreact = true,
       typescriptreact = true,
-      yaml = false,
+      yaml = true,
       markdown = true,
       help = false,
       gitcommit = false,
@@ -56,11 +56,14 @@ return {
     cmd = 'Copilot',
     event = 'InsertEnter',
     config = copilotSetup,
+    enabled = true,
   },
   {
     'zbirenbaum/copilot-cmp',
     config = function()
       require('copilot_cmp').setup()
     end,
+
+    enabled = false,
   },
 }
