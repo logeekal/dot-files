@@ -3,6 +3,7 @@ local opts = { noremap = true, silent = true }
 local setup = function()
   require('telescope').setup({
     defaults = {
+      border = false,
       dynamic_preview_title = true,
       layout_config = {
         vertical = {
