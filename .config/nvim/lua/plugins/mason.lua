@@ -3,7 +3,14 @@
 -----------------------
 
 local setup = function()
-  require("mason").setup({
+  require("mason").setup()
+end
+
+return {
+  {
+    'mason-org/mason.nvim',
+    opts= {
+        log_level = vim.log.levels.DEBUG,
     ui = {
       icons = {
         package_installed = "✓",
@@ -11,12 +18,6 @@ local setup = function()
         package_uninstalled = "✗"
       }
     }
-  })
-end
-
-return {
-  {
-    'williamboman/mason.nvim',
-    config = setup
   }
+}
 }

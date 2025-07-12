@@ -72,3 +72,14 @@ end
 ------
 --- Markdown
 vim.filetype.add({ extension = { mdx = 'markdown' } })
+
+-- Make vim Transparent
+vim.cmd [[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]]
+
+vim.g.loaded_netrw       = 1
+vim.g.loaded_netrwPlugin = 1

@@ -1,33 +1,34 @@
 local utils = require('utils.path')
-local cached_project_root = nil
 
 local function get_custom_file_name(complete_file_name)
-  cached_project_root = nil
+  local cached_project_root = nil
   -- converts absolution path to path relative to git or home_dir
-  if not cached_project_root then
-    --   root_dir = util.root_pattern('.git'),
-    local base_dir = utils.get_project_root_display() .. "/"
-    -- expand str can sometime abbreivate path.. use fnamemodify to get full path
+  -- if not cached_project_root then
+  --   root_dir = util.root_pattern('.git'),
+  local base_dir = utils.get_project_root_display() .. "/"
+  -- expand str can sometime abbreivate path.. use fnamemodify to get full path
 
-    local user_home_dir = vim.loop.os_homedir() .. "/"
-    if not base_dir or base_dir == '' then
-      -- replace home dir with ~
-      cached_project_root = complete_file_name:gsub(user_home_dir, '~')
-    end
-    cached_project_root = complete_file_name:gsub(base_dir, '')
+  local user_home_dir = vim.loop.os_homedir() .. "/"
+  if not base_dir or base_dir == '' then
+    -- replace home dir with ~
+    cached_project_root = complete_file_name:gsub(user_home_dir, '~')
   end
+  cached_project_root = complete_file_name:gsub(base_dir, '')
+  -- print('cached_project_root',
+  --   cached_project_root .. ' complete_file_name: ' .. complete_file_name .. ' base_dir: ' .. base_dir)
+  -- end
 
   return cached_project_root
 end
 
 
--- Autocommand to force a Lualine refresh when a new buffer is read
-vim.api.nvim_create_autocmd({ "BufReadPost", "BufEnter" }, {
-  callback = function()
-    -- Invalidate cache for the project root component to force recalculation
-    cached_project_root = nil
-  end,
-})
+-- -- Autocommand to force a Lualine refresh when a new buffer is read
+-- vim.api.nvim_create_autocmd({ "BufReadPost", "BufEnter", "BufWritePost" }, {
+--   callback = function()
+--     -- Invalidate cache for the project root component to force recalculation
+--     cached_project_root = nil
+--   end,
+-- })
 
 return {
   {

@@ -12,8 +12,8 @@ local setup = function()
       end,
     },
     window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
     },
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -81,7 +81,7 @@ end
 return {
   {
     'hrsh7th/nvim-cmp',
-    enable = false,
+    enabled = true,
     version = false, -- last release is way too old
     event = 'InsertEnter',
     dependencies = {

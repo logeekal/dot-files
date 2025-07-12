@@ -13,48 +13,16 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = { '*' },
   callback = function(event)
-    if
-        vim.bo.filetype == 'typescript'
-        or vim.bo.filetype == 'javascript'
-        or vim.bo.filetype == 'javascriptreact'
-        or vim.bo.filetype == 'typescriptreact'
-    then
-      vim.lsp.buf.format({
-        async = false,
-      })
-      local client =
-          vim.lsp.get_clients({ bufnr = event.buf, name = 'eslint' })[1]
-      if client then
-        local diag = vim.diagnostic.get(
-          event.buf,
-          { namespace = vim.lsp.diagnostic.get_namespace(client.id) }
-        )
-        local diag_result = #diag
-        if diag_result ~= 0 then
-          vim.lsp.buf.format({
-            async = false,
-          })
-          return
-        else
-          print('Not running EslintFixAll')
-          return
-        end
-        vim.lsp.buf.format()
-      else
-        vim.lsp.buf.format()
-      end
-      return
-    else
-      --require("lvim.lsp.utils").format { timeout_ms = 2000, filter = require("lvim.lsp.utils").format_filter }
-      vim.lsp.buf.format() -- careful, this overrides null-ls preferences
-      return
-    end
+    vim.lsp.buf.format({
+      bufnr = event.buf,
+      async = false,
+    })
   end,
 })
 
 local set_override_keymaps = function()
   -- override <C-E> keymap that neoscroll was highjacking
-  vim.keymap.set({ 'n', 'i' }, '<c-e>', '<cmd>NvimTreeToggle %:p:h<CR>', opts)
+  vim.keymap.set({ 'n', 'i' }, '<c-e>', '<cmd>Yazi<CR>', opts)
 end
 
 vim.api.nvim_create_autocmd({

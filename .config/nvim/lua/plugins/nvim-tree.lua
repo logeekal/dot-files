@@ -181,37 +181,79 @@ local on_attach = function(bufnr)
     api.node.open.horizontal,
     opts('Open: Horizontal Split')
   )
+
+  local function change_root_to_global_cwd()
+    local nvim_tree_api = require("nvim-tree.api")
+    local global_cwd = vim.fn.getcwd(-1, -1)
+    nvim_tree_api.tree.change_root(global_cwd)
+  end
+
+  vim.keymap.set('n', '<C-c>', change_root_to_global_cwd, opts('Change Root To Global CWD'))
 end
 
-local setup = function()
-  require('nvim-tree').setup({
-    sort_by = 'case_sensitive',
-    --respect_buf_cwd = true,
-    on_attach = on_attach,
-    actions = {
-      open_file = {
-        window_picker = {
-          enable = false,
-        },
-      },
-    },
-    view = {
-      side = 'right',
-    },
-    renderer = {
-      group_empty = true,
-    },
-    filters = {
-      dotfiles = true,
-    },
-  })
-end
+
+local WIDTH_RATIO = 0.8
+local HEIGHT_RATIO = 0.8
 
 return {
   'nvim-tree/nvim-web-devicons',
   {
     'nvim-tree/nvim-tree.lua',
-    config = setup,
+    enabled = false,
     cmd = 'NvimTreeToggle',
+    opts = {
+      sort_by = 'case_sensitive',
+      respect_buf_cwd = false,
+      on_attach = on_attach,
+      sync_root_with_cwd = false,
+      view = {
+        side = 'right',
+        float = {
+          enable = false,
+          quit_on_focus_loss = true,
+          open_win_config = function()
+            local screen_w = vim.opt.columns:get()
+            local screen_h = vim.opt.lines:get() - vim.opt.cmdheight:get()
+            local window_w = screen_w * WIDTH_RATIO
+            local window_h = screen_h * HEIGHT_RATIO
+            local window_w_int = math.floor(window_w)
+            local window_h_int = math.floor(window_h)
+            local center_x = (screen_w - window_w) / 4
+            local center_y = ((vim.opt.lines:get() - window_h) / 4) - vim.opt.cmdheight:get()
+            return {
+              border = "rounded",
+              relative = "editor",
+              row = center_y,
+              col = center_x,
+              width = window_w_int,
+              height = window_h_int,
+            }
+          end,
+        },
+      },
+      renderer = {
+        full_name = true,
+        group_empty = true,
+        special_files = {},
+        symlink_destination = false,
+        indent_markers = {
+          enable = true,
+        }
+      },
+      filters = {
+        dotfiles = true,
+      },
+      actions = {
+        open_file = {
+          window_picker = {
+            enable = false,
+          },
+        },
+        change_dir = {
+          enable = true,
+          restrict_above_cwd = true,
+        }
+      }
+    }
   },
 }
