@@ -7,8 +7,25 @@ alias lsm="lsd -l --sort name"
 
 # yarn/npm aliases
 alias yw="yarn workspace"
-alias yarne="yarn \$(cat package.json | jq -r '.scripts | keys[]' | fzf)"
+function yarne() {
+  local SELECTED_SCRIPT # Declare local variable to avoid polluting environment
+  SELECTED_SCRIPT=$(cat package.json | jq -r '.scripts | keys[]' | fzf)
+  echo "Selected yarn script: $SELECTED_SCRIPT"
 
+  if [[ -n "$SELECTED_SCRIPT" ]]; then
+    local COMMAND_TO_RUN="yarn \"$SELECTED_SCRIPT\""
+    echo "Running $COMMAND_TO_RUN"
+
+    # Add the command to history
+    history -s "$COMMAND_TO_RUN"
+
+    # Execute the command
+    eval "$COMMAND_TO_RUN" # Use eval because $COMMAND_TO_RUN contains quotes
+  else
+    echo "No yarn script selected. Exiting."
+    return 1 # Return a non-zero exit code to indicate failure
+  fi
+}
 
 # git alias
 ## gco shows branches based on last commit that was done.
@@ -25,7 +42,7 @@ alias gbd="git branch -D \"\$(git branch -v | sed \"s/\*/ /\" | awk '{print \$1}
 alias gpu="git push -u origin \"\$(git branch --show-current)\""
 
 function ggo() {
-    gh browse $1
+  gh browse $1
 }
 
 ## merge conflicts
@@ -37,12 +54,12 @@ alias prweb="gh pr view --web"
 
 # tmux alias
 ### tmux attach session and select the session with a lookup list with FZF
-alias tma="tmux attach -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | fzf)\" " ;
-alias tmd="tmux detach";
+alias tma="tmux attach -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | fzf)\" "
+alias tmd="tmux detach"
 alias tmkill="tmux kill-session"
 
 ### tmux switch session and select the session with a lookup list with FZF
-alias tms="tmux switch -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | fzf)\" " ;
+alias tms="tmux switch -t \"\$(tmux ls | sed \"s/:/ /\"  | awk '{print \$1}' | fzf)\" "
 
 #neovim alias
 #alias vi=/usr/bin/vi
@@ -61,28 +78,27 @@ alias fc="fc -e vim"
 alias dotgit="git --git-dir=$HOME/dot-files --work-tree=$HOME"
 
 function sshadd {
-    eval $(ssh-agent -s)
-    ssh-add ${1}
+  eval $(ssh-agent -s)
+  ssh-add ${1}
 }
-
 
 # Convert video to gif file.
 # Usage: video2gif video_file (scale) (fps)
 video2gif() {
-    ffmpeg -y -i "${1}" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen "${1}.png"
-    ffmpeg -i "${1}" -i "${1}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${1}".gif
-    rm "${1}.png"
+  ffmpeg -y -i "${1}" -vf fps=${3:-10},scale=${2:-320}:-1:flags=lanczos,palettegen "${1}.png"
+  ffmpeg -i "${1}" -i "${1}.png" -filter_complex "fps=${3:-10},scale=${2:-320}:-1:flags=lanczos[x];[x][1:v]paletteuse" "${1}".gif
+  rm "${1}.png"
 }
 
-
-video2mp4(){
-    INPUT_FULL_FILE_PATH="${1}"
-    INPUT_FILE=$(basename "${INPUT_FULL_FILE_PATH}")
-    INPUT_PATH=$(dirname "${INPUT_FULL_FILE_PATH}")
-    OUT_FULL_FILE_PATH="${INPUT_PATH}/${INPUT_FILE%.*}.mp4"
-    printf "Converting ${INPUT_FILE} to ${OUT_FULL_FILE_PATH}"
-    ffmpeg -i "${INPUT_FULL_FILE_PATH}" -q:v 0 "${INPUT_PATH}/${INPUT_FILE%.*}.mp4" && rm "${INPUT_FULL_FILE_PATH}"
+video2mp4() {
+  INPUT_FULL_FILE_PATH="${1}"
+  INPUT_FILE=$(basename "${INPUT_FULL_FILE_PATH}")
+  INPUT_PATH=$(dirname "${INPUT_FULL_FILE_PATH}")
+  OUT_FULL_FILE_PATH="${INPUT_PATH}/${INPUT_FILE%.*}.mp4"
+  printf "Converting ${INPUT_FILE} to ${OUT_FULL_FILE_PATH}"
+  ffmpeg -i "${INPUT_FULL_FILE_PATH}" -q:v 0 "${INPUT_PATH}/${INPUT_FILE%.*}.mp4" && rm "${INPUT_FULL_FILE_PATH}"
 }
 
-alias fast="docker run --rm --net=host waja/speedtest"
+# alias fast="docker run --rm --net=host waja/speedtest"
 alias temp="nvim /tmp/tmp.${1}"
+alias restartgpg="gpg-connect-agent reloadagent /bye"

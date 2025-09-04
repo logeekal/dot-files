@@ -60,26 +60,27 @@ return {
               return require('lsp-progress').progress()
             end,
           },
+          lualine_y = { 'encoding', 'fileformat', 'filetype' },
           -- progress bar by Karen
-          lualine_y = {
-            {
-              function()
-                local current_line = vim.fn.line('.')
-                local total_lines = vim.fn.line('$')
-                local width = 10
-                if total_lines <= 1 then
-                  return string.rep('▁', width)
-                end
-                local progress = (current_line - 1) / (total_lines - 1)
-                local filled = math.floor(progress * width + 0.5)
-                local bar = string.rep('█', filled)
-                    .. string.rep('▁', width - filled)
-                return bar
-              end,
-              color = { fg = '#5E81AC' }, -- light blue
-              separator = '',
-            },
-          },
+          -- lualine_y = {
+          --   {
+          --     function()
+          --       local current_line = vim.fn.line('.')
+          --       local total_lines = vim.fn.line('$')
+          --       local width = 10
+          --       if total_lines <= 1 then
+          --         return string.rep('▁', width)
+          --       end
+          --       local progress = (current_line - 1) / (total_lines - 1)
+          --       local filled = math.floor(progress * width + 0.5)
+          --       local bar = string.rep('█', filled)
+          --           .. string.rep('▁', width - filled)
+          --       return bar
+          --     end,
+          --     color = { fg = '#5E81AC' }, -- light blue
+          --     separator = '',
+          --   },
+          -- },
           -- lualine_x = {
           --   {
           --     require('noice').api.statusline.mode.get,
