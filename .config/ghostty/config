@@ -1,0 +1,10 @@
+theme = MaterialDarker
+font-family = JetBrains Mono Nerd Font
+font-size = 12
+font-style-bold = true
+window-padding-x = 10
+window-padding-y = 10
+cursor-style = block
+shell-integration-features = no-cursor
+macos-titlebar-proxy-icon = hidden
+## @background-image = /Users/jatinkathuria/Downloads/the-batman-movie-8k-g5-1920x1080.jpg
