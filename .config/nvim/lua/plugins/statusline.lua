@@ -12,8 +12,9 @@ local function get_custom_file_name(complete_file_name)
   if not base_dir or base_dir == '' then
     -- replace home dir with ~
     cached_project_root = complete_file_name:gsub(user_home_dir, '~')
+  else
+    cached_project_root = complete_file_name:gsub(base_dir, '')
   end
-  cached_project_root = complete_file_name:gsub(base_dir, '')
   -- print('cached_project_root',
   --   cached_project_root .. ' complete_file_name: ' .. complete_file_name .. ' base_dir: ' .. base_dir)
   -- end

@@ -22,6 +22,16 @@ end
 
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(ev)
+    -- Prevent LSP from attaching to large files
+    if vim.b[ev.buf].large_file then
+      vim.api.nvim_echo({{'[LargeFile] Blocking LSP attach attempt', 'WarningMsg'}}, true, {})
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      if client then
+        vim.lsp.buf_detach_client(ev.buf, client.id)
+      end
+      return
+    end
+    
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if client:supports_method('textDocument/completion') then
       vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })

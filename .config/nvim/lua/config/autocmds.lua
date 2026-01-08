@@ -13,6 +13,12 @@ vim.api.nvim_create_autocmd({ 'BufReadPost' }, {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   pattern = { '*' },
   callback = function(event)
+    -- Skip formatting for large files
+    if vim.b[event.buf].large_file then
+      vim.api.nvim_echo({ { '[LargeFile] Skipping format on save', 'WarningMsg' } }, true, {})
+      return
+    end
+
     vim.lsp.buf.format({
       bufnr = event.buf,
       async = false,
@@ -55,24 +61,5 @@ end
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   callback = function(event)
     vimEnterOps(event)
-  end,
-})
-
--- Large files
---
-vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-  pattern = '*',
-  desc = 'Disable syntax highlighting in files larger than 1MB',
-  callback = function(args)
-    local highlighter = require('vim.treesitter.highlighter')
-    local ts_was_active = highlighter.active[args.buf]
-    local file_size = vim.fn.getfsize(args.file)
-    local max_file_size = 10 * 1024 * 1024
-    if file_size > max_file_size then
-      utils.disableSyntaxLargeFile()
-      if ts_was_active then
-        vim.notify('File larger than 1MB, turned off syntax highlighting')
-      end
-    end
   end,
 })

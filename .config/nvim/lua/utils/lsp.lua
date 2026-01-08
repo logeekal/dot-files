@@ -16,8 +16,9 @@ M.lsp_servers = {
   tailwindcss = true,
   pylsp = true,
   marksman = true,
-  vtsls = true,
-  vectorcode_server = false
+  vectorcode_server = false,
+  tsgo = false,
+  vtsls = true
 }
 
 M.style_providers = {
@@ -27,6 +28,7 @@ M.style_providers = {
   shfmt = true,
   cssfmt = true,
   jsonfmt = true,
+  xmlformatter = true,
 }
 
 -- Returns a table of enabled LSP servers

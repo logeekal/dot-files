@@ -7,5 +7,8 @@ return {
   },
   {
     import = 'plugins.vibe_coding.misc'
+  },
+  {
+    import = 'plugins.vibe_coding.mcp'
   }
 }

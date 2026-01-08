@@ -1,4 +1,6 @@
 return {
+  cmd = { 'vtsls', '--stdio' },
+  enabled = true,
   -- customize handlers for commands
   handlers = {
     source_definition = function(err, locations) end,
@@ -37,6 +39,11 @@ return {
         globalPlugins = {},
       },
     },
+  },
+  init_options = {
+    settings = {
+      maxTsServerMemory = 8192, -- Increase memory limit (e.g., 8GB)
+    }
   },
 }
 

@@ -51,14 +51,54 @@ M.mason_install = function(package_list)
 end
 
 M.disableSyntaxLargeFile = function()
-  vim.cmd('TSBufDisable highlight')
+  vim.api.nvim_echo({ { '[Utils] Starting to disable features...', 'Normal' } }, true, {})
+
+  -- Detach all LSP clients from the buffer
+  local buf = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = buf })
+  if #clients > 0 then
+    vim.api.nvim_echo({ { string.format('[Utils] Detaching %d LSP client(s)', #clients), 'Normal' } }, true, {})
+    for _, client in ipairs(clients) do
+      vim.api.nvim_echo({ { string.format('[Utils] Detaching LSP: %s', client.name), 'Normal' } }, true, {})
+      vim.lsp.buf_detach_client(buf, client.id)
+    end
+    vim.api.nvim_echo({ { '[Utils] All LSP clients detached', 'Normal' } }, true, {})
+  else
+    vim.api.nvim_echo({ { '[Utils] No LSP clients to detach', 'Normal' } }, true, {})
+  end
+
+  local success, err = pcall(function()
+    vim.cmd('TSBufDisable highlight')
+    vim.api.nvim_echo({ { '[Utils] TreeSitter highlight disabled', 'Normal' } }, true, {})
+  end)
+  if not success then
+    vim.api.nvim_echo({ { string.format('[Utils] Failed to disable TS highlight: %s', err), 'WarningMsg' } }, true, {})
+  end
+
   -- Switching syntax off is only needed in very big file ( > 100M )
   -- vim.cmd('syntax off')
   -- vim.cmd('syntax clear')
-  vim.cmd('TSContext disable')
+
+  success, err = pcall(function()
+    vim.cmd('TSContextDisable')
+    vim.api.nvim_echo({ { '[Utils] TSContext disabled', 'Normal' } }, true, {})
+  end)
+  if not success then
+    vim.api.nvim_echo({ { string.format('[Utils] Failed to disable TSContext: %s', err), 'WarningMsg' } }, true, {})
+  end
+
   -- vim.cmd('IlluminatePauseBuf')
   -- vim.cmd('IndentBlanklineDisable')
-  vim.cmd('NoMatchParen')
+
+  success, err = pcall(function()
+    vim.cmd('NoMatchParen')
+    vim.api.nvim_echo({ { '[Utils] MatchParen disabled', 'Normal' } }, true, {})
+  end)
+  if not success then
+    vim.api.nvim_echo({ { string.format('[Utils] Failed to disable MatchParen: %s', err), 'WarningMsg' } }, true, {})
+  end
+
+  vim.api.nvim_echo({ { '[Utils] All features disabled successfully', 'Normal' } }, true, {})
 end
 
 return M

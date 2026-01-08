@@ -192,4 +192,10 @@ done
 set -o vi
 eval "$(/Users/jatinkathuria/.local/bin/mise activate bash)"
 
-export PATH="/opt/homebrew/opt/curl/bin:$PATH"
+export PATH="/opt/homebrew/opt/curl/bin:$HOME/.docker/bin:$PATH"
+
+ulimit -n 524288
+ulimit -Sn 524288
+
+# opencode
+export PATH=/Users/jatinkathuria/.opencode/bin:$PATH
