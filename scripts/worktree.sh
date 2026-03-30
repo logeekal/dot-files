@@ -91,9 +91,22 @@ function create_worktree_pr() {
   echo "worktree created. Exiting"
 }
 
+function create_branch_if_not_exists() {
+  local branch_name=$1
+
+  branch_exists=$(git branch --list $branch_name)
+  if [ -n "$branch_exists" ]; then
+    echo "branch $branch_name already exists. Noop"
+  else
+    echo "Creating branch $branch_name"
+    git branch $branch_name
+  fi
+}
+
 function create_worktree_branch() {
   echo "creating worktree based on branch"
   local branch_name=$1
+  create_branch_if_not_exists $branch_name
   local safe_branch_name=$(safe_dir_name $branch_name)
   local worktree_name="kibana__$safe_branch_name"
   local worktree_dir="$HOME/projects/$worktree_name"
